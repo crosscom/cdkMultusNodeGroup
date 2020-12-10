@@ -22,6 +22,13 @@
   },
   "dependencies": {
     "@aws-cdk/core": "1.77.0",
+    "@aws-cdk/aws-ec2": "1.77.0",
+    "@aws-cdk/aws-eks": "1.77.0",
+    "@aws-cdk/aws-events-targets": "1.77.0",
+    "@aws-cdk/aws-iam": "1.77.0",
+    "@aws-cdk/aws-lambda": "1.77.0",
+    "@aws-cdk/custom-resources": "1.77.0",
+    "console": "^0.7.2",
     "source-map-support": "^0.5.16"
   }
 }
