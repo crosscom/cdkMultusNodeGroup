@@ -19,6 +19,7 @@ After `git clone https://github.com/crosscom/cdkMultusNodeGroup.git`, please do.
     * `cdk.json` → configure variables such as vpc-id, eks cluster name, multus subnetId, security group Id and so on.
 * `cdk synth -j` //emits the synthesized CloudFormation template
 * `cdk deploy -j` //deploy this stack to your default AWS account/region
+
 *Note that because of MIME userdata, we have to use JSON format*
 
 ## cdkMultusNodeGroup
