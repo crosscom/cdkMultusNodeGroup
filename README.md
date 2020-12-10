@@ -1,14 +1,27 @@
-# Welcome to your CDK TypeScript project!
+# CDK for Multus CNI ready EKS managed NodeGroup 
+This is a temporary private Git repo for CDK sample of "Multus CNI for EKS managed Nodegroup".
 
-This is a blank project for TypeScript development with CDK.
+## Prerequisites
+* You have to install nodejs and CDK. (unless you are using Cloud9) <br>
+`sudo yum install nodejs`  <br>
+`curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash` <br>
+`. ~/.nvm/nvm.sh` <br>
+`nvm install 10.23.0` <br>
+`sudo npm install -g npm@latest` (to install 6.14.8) <br>
+`sudo npm install -g aws-cdk` <br>
+* Configure environmental variables of CDK_DEPLOY_ACCOUNT and CDK_DEFAULT_REGION with your own environment.
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+## HOWTO
+After `git clone https://github.com/crosscom/cdkMultusNodeGroup.git`, please do..
 
-## Useful commands
+* `npm install` //for Packages installation
+* Setting environmental variables according to your environment.
+    * `cdk.json` → configure variables such as vpc-id, eks cluster name, multus subnetId, security group Id and so on.
+* `cdk synth` //emits the synthesized CloudFormation template
+* `cdk deploy` //deploy this stack to your default AWS account/region
 
- * `npm run build`   compile typescript to js
- * `npm run watch`   watch for changes and compile
- * `npm run test`    perform the jest unit tests
- * `cdk deploy`      deploy this stack to your default AWS account/region
- * `cdk diff`        compare deployed stack with current state
- * `cdk synth`       emits the synthesized CloudFormation template
+## cdkMultusNodeGroup
+* CDK creates 2 Lambda (1> attach multus eni, 2> auto reboot) to attach multus ENIs to EKS managed NodeGroup.
+* Basically, logic is identical to the one, CloudFormation version. https://github.com/aws-samples/cfn-nodegroup-for-multus-cni
+* CFN version is only available with Self-Managed NodeGroup (because of constraints of CFN, lack of interactability - In CFN, it is not possible to find AutoScaling Group armed to EKS NodeGroup while we need this for CloudWatch Event Rule configuration).
+* CDK version makes this to be available using AwsCustomResource SDK API call.
