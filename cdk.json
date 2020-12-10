@@ -9,10 +9,14 @@
     "eks.vpcid": "vpc-0b381a3fab3e50475",
     "eks.clustername":  "multus",
     "eks.nodegroupname":  "multus-ng",
-    "nodegroup.instance_type": "c5.large",
     "nodegroup.min": 1,
     "nodegroup.max": 1,
     "nodegroup.desired": 1,
-    "eks.k8ssubnetid": "subnet-00ff77c721a379562"
+    "nodegroup.instance": "c5.large",
+    "nodegroup.disk": 50,
+    "nodegroup.sshkey": "MyUsWest2",
+    "eks.k8ssubnetid": "subnet-00ff77c721a379562",
+    "eks.multussubnet1": "subnet-0a986ed2ffef39e6f",
+    "eks.multussecgroup1": "sg-081cd3d9643f07a45"
   }
 }

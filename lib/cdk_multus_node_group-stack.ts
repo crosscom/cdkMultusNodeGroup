@@ -23,29 +23,34 @@ export class CdkMultusNodeGroupStack extends cdk.Stack {
 
     const launchTemplate = new ec2.CfnLaunchTemplate(this, 'LaunchTemplate', {
         launchTemplateData: {
-          //instanceType: "c5.large",
           instanceType: this.node.tryGetContext("nodegroup.instance"),
+          keyName: this.node.tryGetContext("nodegroup.sshkey"),
+          blockDeviceMappings: [{
+              deviceName: "/dev/xvda",
+              ebs: {
+                  volumeSize: this.node.tryGetContext("nodegroup.disk"),
+              },
+          }],
           userData: cdk.Fn.base64(
 `MIME-Version: 1.0
- Content-Type: multipart/mixed; boundary="==MYBOUNDARY=="
+Content-Type: multipart/mixed; boundary="==MYBOUNDARY=="
 
- --==MYBOUNDARY==
- Content-Type: text/x-shellscript; charset="us-ascii"
+--==MYBOUNDARY==
+Content-Type: text/x-shellscript; charset="us-ascii"
 
- #!/bin/bash
- ls /sys/class/net/ > /tmp/ethList;cat /tmp/ethList |while read line ; do sudo ifconfig $line up; done
- grep eth /tmp/ethList |while read line ; do echo "ifconfig $line up" >> /etc/rc.d/rc.local; done
- systemctl enable rc-local
+#!/bin/bash
+ls /sys/class/net/ > /tmp/ethList;cat /tmp/ethList |while read line ; do sudo ifconfig $line up; done
+grep eth /tmp/ethList |while read line ; do echo "ifconfig $line up" >> /etc/rc.d/rc.local; done
+systemctl enable rc-local
 
- --==MYBOUNDARY==--`),},
-        launchTemplateName: "test-lc"
+--==MYBOUNDARY==--`),},
+        launchTemplateName: "multus-launch-template"
     });
 
     const k8sSubnet = ec2.Subnet.fromSubnetId(this, "k8s-subnet",
                               this.node.tryGetContext("eks.k8ssubnetid"));
     const ng = new eks.Nodegroup(this, "node-group", {
         cluster: eksCluster,
-        //instanceType: new ec2.InstanceType("c5.large"),
         minSize: this.node.tryGetContext("nodegroup.min"),
         desiredSize: this.node.tryGetContext("nodegroup.desired"),
         maxSize: this.node.tryGetContext("nodegroup.max"),
