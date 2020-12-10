@@ -17,8 +17,9 @@ After `git clone https://github.com/crosscom/cdkMultusNodeGroup.git`, please do.
 * `npm install` //for Packages installation
 * Setting environmental variables according to your environment.
     * `cdk.json` → configure variables such as vpc-id, eks cluster name, multus subnetId, security group Id and so on.
-* `cdk synth` //emits the synthesized CloudFormation template
-* `cdk deploy` //deploy this stack to your default AWS account/region
+* `cdk synth -j` //emits the synthesized CloudFormation template
+* `cdk deploy -j` //deploy this stack to your default AWS account/region
+*Note that because of MIME userdata, we have to use JSON format*
 
 ## cdkMultusNodeGroup
 * CDK creates 2 Lambda (1> attach multus eni, 2> auto reboot) to attach multus ENIs to EKS managed NodeGroup.
