@@ -36,15 +36,14 @@ def lambda_handler(event, context):
                 complete_lifecycle_action_failure(LifecycleHookName,AutoScalingGroupName,instance_id)
                 delete_interface(interface_id)
                 return
-        complete_lifecycle_action_success(LifecycleHookName,AutoScalingGroupName,instance_id)
+        #complete_lifecycle_action_success(LifecycleHookName,AutoScalingGroupName,instance_id)
 
     if event["detail-type"] == "EC2 Instance-terminate Lifecycle Action":
         interface_ids = []
         attachment_ids = []
 
-        # -* K8s draining function should be added here -*#
-
-        complete_lifecycle_action_success(LifecycleHookName,AutoScalingGroupName,instance_id)
+        # -* Further enhancement: K8s draining function should be added here -*#
+        #complete_lifecycle_action_success(LifecycleHookName,AutoScalingGroupName,instance_id)
 
 
 def create_interface(subnet_id,sg_id):
