@@ -83,7 +83,7 @@ systemctl enable rc-local
     attachEniPolicyStatement.addResources("arn:aws:logs:*:*:*");
 
     const lambdaAttachMultusEni = new lambda.Function(this, "LambdaAttachMultusEni", {
-        runtime: lambda.Runtime.PYTHON_3_6,
+        runtime: lambda.Runtime.PYTHON_3_8,
         code: lambda.Code.fromAsset('lambda'),
         handler: 'attach_multus_eni.lambda_handler',
         environment: {
@@ -133,7 +133,7 @@ systemctl enable rc-local
                                         "ec2:TerminateInstances");
     autoRebootPolicyStatement.addResources("*")
     const lambdaAutoReboot = new lambda.Function(this, "LambdaAutoReboot", {
-        runtime: lambda.Runtime.PYTHON_3_6,
+        runtime: lambda.Runtime.PYTHON_3_8,
         code: lambda.Code.fromAsset('lambda'),
         handler: 'auto_reboot.handler',
     });
